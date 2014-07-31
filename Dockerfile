@@ -5,7 +5,8 @@
 #
 
 # Pull base image.
-FROM dockerfile/ubuntu
+FROM ubuntu
+MAINTAINER veeru "cheftestn@gmail.com"
 
 # Install MongoDB.
 RUN \
