@@ -1,7 +1,4 @@
-mongodb
-=======
 
-DockerMongodb
 ## MongoDB Dockerfile
 
 
