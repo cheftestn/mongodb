@@ -1,32 +1,15 @@
-#
-# MongoDB Dockerfile
-#
-# https://github.com/dockerfile/mongodb
-#
+FROM ubuntu:latest
 
-# Pull base image.
-FROM ubuntu
-MAINTAINER veeru "cheftestn@gmail.com"
+# Add 10gen official apt source to the sources list
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/10gen.list
 
-# Install MongoDB.
-RUN \
-  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
-  echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list && \
-  apt-get update && \
-  apt-get install -y mongodb-org && \
-  mkdir -p /data/db
+# Install MongoDB
+RUN apt-get update
+RUN apt-get install mongodb-10gen
 
-# Define mountable directories.
-VOLUME ["/data"]
+# Create the MongoDB data directory
+RUN mkdir -p /data/db
 
-# Define working directory.
-WORKDIR /data
-
-# Define default command.
-CMD ["mongod"]
-
-# Expose ports.
-#   - 27017: process
-#   - 28017: http
 EXPOSE 27017
-EXPOSE 28017
+ENTRYPOINT ["usr/bin/mongod"]
