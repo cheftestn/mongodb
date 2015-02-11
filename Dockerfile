@@ -10,6 +10,10 @@ RUN apt-get install mongodb-10gen
 
 # Create the MongoDB data directory
 RUN mkdir -p /data/db
+RUN mkdir -p /mongodbkey
+RUN openssl rand -base64 741 > /mongodbkey/keyfile
+RUN chmod 600 /mongodbkey/keyfile
+#VOLUME /var/backup
 
 EXPOSE 27017
 ENTRYPOINT ["usr/bin/mongod"]
